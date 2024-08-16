@@ -19,6 +19,14 @@ function gender_constant_convert($gender)
     }
 }
 
+function check_bac($bac)
+{
+    if ($bac > 0.08) {
+        return 'Stop Stop Stop!!!!';
+    } else {
+        return 'GO GO GO';
+    }
+}
 $weight = $_POST["weight"];
 $weight_unit = $_POST['unit'];
 $gender = $_POST['gender'];
@@ -49,9 +57,11 @@ echo '<br>';
 echo $check_weight;
 
 $bac = (($num_drinks * 5.14) / ($weight * $gender_constant)) - (0.015 * $time_elapsed);
+echo '<br>';
+echo $bac;
 
-if ($bac > 0.08) {
-    echo 'Unsafe to drive';
-} else {
-    echo 'Safe to drive';
-}
+
+$message = check_bac($bac);
+echo $message;
+
+header("Location:index.php?bac=" . number_format($bac, 3) . "&safety=" . $message);
